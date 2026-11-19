@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/instruments">🎵 5 SOL</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuFront">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menuFront">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/instruments" routerLinkActive="active">Nos cours</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/panier" routerLinkActive="active">
+            Panier
+            <span class="badge rounded-pill"
+                  [class.bg-warning]="cartService.count() > 0"
+                  [class.text-dark]="cartService.count() > 0"
+                  [class.bg-secondary]="cartService.count() == 0">
+              {{ cartService.count() }}
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/a-propos" routerLinkActive="active">À propos</a>
+        </li>
+      </ul>
+      <a class="btn btn-outline-light btn-sm" routerLink="/admin/login">Espace admin</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-4">
+  <router-outlet />
+</main>
+
+<footer class="text-center text-muted py-3 border-top">
+  © 2026 5 SOL - Cours de musique
+</footer>

@@ -1,0 +1,55 @@
+@if (instrument(); as i) {
+  <div class="row g-4">
+    <div class="col-md-5">
+      <img [src]="i.photo" [alt]="i.nom" class="img-fluid rounded shadow-sm w-100">
+    </div>
+    <div class="col-md-7">
+      <h1 class="mb-3">{{ i.nom }}</h1>
+      <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Prix</span><strong class="text-primary">{{ i.prix }} DT</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Date de début</span><strong>{{ i.dateDebut | date:'dd/MM/yyyy' }}</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Durée du cours</span><strong>{{ i.dureeCours | duree }}</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Solfège</span>
+          <span class="badge"
+                [class.bg-success]="i.solfegeInclus"
+                [class.bg-secondary]="!i.solfegeInclus">
+            {{ i.solfegeInclus ? 'Inclus' : 'Non inclus' }}
+          </span>
+        </li>
+      </ul>
+
+      <h5>Niveaux proposés</h5>
+      <p>
+        @for (n of i.niveaux; track n.id) {
+          <span class="badge bg-info text-dark me-1">{{ n.nom }}</span>
+        }
+      </p>
+
+      <h5>Enseignant(s)</h5>
+      <ul>
+        @for (e of i.enseignant; track $index) {
+          <li>{{ e.prenom }} {{ e.nom }} - <em>{{ e.specialite }}</em></li>
+        }
+      </ul>
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" (click)="onAddToCart(i)" [disabled]="cartService.contient(i.id)">
+          {{ cartService.contient(i.id) ? 'Déjà dans le panier' : 'Ajouter au panier' }}
+        </button>
+        <button class="btn btn-outline-secondary" (click)="onBack()">Retour à la liste</button>
+      </div>
+    </div>
+  </div>
+} @else if (introuvable()) {
+  <div class="alert alert-danger">Ce cours n'existe pas.</div>
+  <button class="btn btn-outline-secondary" (click)="onBack()">Retour à la liste</button>
+} @else {
+  <p class="text-muted">Chargement…</p>
+}

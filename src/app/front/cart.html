@@ -1,0 +1,39 @@
+<h1 class="mb-4">Mon panier</h1>
+
+@if (commandeValidee()) {
+  <div class="alert alert-success">
+    Merci ! Votre réservation a bien été enregistrée (simulation de paiement).
+  </div>
+}
+
+@if (items().length > 0) {
+  <div class="table-responsive">
+    <table class="table table-hover align-middle bg-white shadow-sm">
+      <thead class="table-dark">
+        <tr><th>Cours</th><th>Nom</th><th>Prix</th><th></th></tr>
+      </thead>
+      <tbody>
+        @for (i of items(); track i.id) {
+          <tr>
+            <td><img [src]="i.photo" [alt]="i.nom" class="miniature"></td>
+            <td>{{ i.nom }}</td>
+            <td>{{ i.prix }} DT</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-danger" (click)="onRemove(i.id)">Retirer</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+      <tfoot>
+        <tr class="table-light">
+          <th colspan="2" class="text-end">Total</th>
+          <th colspan="2">{{ total() }} DT</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <button class="btn btn-success" (click)="onValidate()">Valider la réservation</button>
+} @else if (!commandeValidee()) {
+  <div class="alert alert-info">Votre panier est vide.</div>
+  <a class="btn btn-primary" routerLink="/instruments">Découvrir nos cours</a>
+}

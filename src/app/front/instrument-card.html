@@ -1,0 +1,17 @@
+<div class="card h-100 shadow-sm">
+  <img [src]="instrument().photo" class="card-img-top" [alt]="instrument().nom">
+  <div class="card-body">
+    <h5 class="card-title">{{ instrument().nom }}</h5>
+    <p class="fw-bold text-primary mb-2">{{ instrument().prix }} DT</p>
+    <span class="badge"
+          [class.bg-success]="instrument().solfegeInclus"
+          [class.bg-secondary]="!instrument().solfegeInclus">
+      {{ instrument().solfegeInclus ? 'Solfège inclus' : 'Sans solfège' }}
+    </span>
+  </div>
+  <div class="card-footer bg-white border-0 pb-3">
+    <a class="btn btn-outline-primary w-100" [routerLink]="['/instruments', instrument().id]">
+      Voir le détail
+    </a>
+  </div>
+</div>

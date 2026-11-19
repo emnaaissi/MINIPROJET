@@ -1,0 +1,41 @@
+<div class="container py-5" style="max-width: 440px">
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+      <h3 class="mb-3">Espace administrateur</h3>
+
+      @if (erreur()) {
+        <div class="alert alert-danger">{{ erreur() }}</div>
+      }
+
+      <form [formRoot]="loginForm" (submit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label">Nom d'utilisateur</label>
+          <input type="text" class="form-control" [formField]="loginForm.nom"
+                 [class.is-invalid]="loginForm.nom().invalid() && loginForm.nom().touched()">
+          @if (loginForm.nom().invalid() && loginForm.nom().touched()) {
+            @for (err of loginForm.nom().errors(); track $index) {
+              <div class="text-danger small">{{ err.message }}</div>
+            }
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Mot de passe</label>
+          <input type="password" class="form-control" [formField]="loginForm.password"
+                 [class.is-invalid]="loginForm.password().invalid() && loginForm.password().touched()">
+          @if (loginForm.password().invalid() && loginForm.password().touched()) {
+            @for (err of loginForm.password().errors(); track $index) {
+              <div class="text-danger small">{{ err.message }}</div>
+            }
+          }
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm().invalid()">
+          Se connecter
+        </button>
+      </form>
+
+      <a class="d-block text-center mt-3" routerLink="/instruments">← Retour au site</a>
+    </div>
+  </div>
+</div>

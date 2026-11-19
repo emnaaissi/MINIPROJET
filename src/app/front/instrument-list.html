@@ -1,0 +1,38 @@
+<div class="hero rounded-3 p-5 mb-4 text-center">
+  <h1 class="display-5 fw-bold">Apprenez la musique avec 5 SOL</h1>
+  <p class="lead mb-0">Piano, guitare, violon, oud, batterie, chant… trouvez le cours qui vous ressemble.</p>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-5">
+        <label class="form-label">Nom commençant par</label>
+        <input type="text" class="form-control" placeholder="ex : P" #nomInput
+               (input)="nomRecherche.set(nomInput.value)">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Prix maximum (DT)</label>
+        <input type="number" class="form-control" placeholder="ex : 80" #prixInput
+               (input)="prixMax.set(prixInput.value)">
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-secondary w-100" (click)="onReset(nomInput, prixInput)">
+          Réinitialiser
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  @for (i of resultats(); track i.id) {
+    <div class="col-sm-6 col-lg-4">
+      <app-instrument-card [instrument]="i" />
+    </div>
+  } @empty {
+    <div class="col-12">
+      <div class="alert alert-info">Aucun cours ne correspond à votre recherche.</div>
+    </div>
+  }
+</div>

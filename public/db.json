@@ -1,0 +1,112 @@
+{
+  "instruments": [
+    {
+      "id": "a1f3c9d2",
+      "nom": "Piano",
+      "photo": "assets/images/piano.jpg",
+      "prix": 90,
+      "dateDebut": "2026-12-01",
+      "dureeCours": 60,
+      "solfegeInclus": true,
+      "niveaux": [
+        { "id": "n1", "nom": "Débutant" },
+        { "id": "n2", "nom": "Intermédiaire" },
+        { "id": "n3", "nom": "Avancé" }
+      ],
+      "enseignant": [
+        { "nom": "Ben Salah", "prenom": "Leila", "specialite": "Piano classique" }
+      ]
+    },
+    {
+      "id": "b7e2d4a1",
+      "nom": "Guitare",
+      "photo": "assets/images/guitare.jpg",
+      "prix": 70,
+      "dateDebut": "2026-12-05",
+      "dureeCours": 45,
+      "solfegeInclus": false,
+      "niveaux": [
+        { "id": "n1", "nom": "Débutant" },
+        { "id": "n2", "nom": "Intermédiaire" }
+      ],
+      "enseignant": [
+        { "nom": "Trabelsi", "prenom": "Karim", "specialite": "Guitare acoustique" },
+        { "nom": "Gharbi", "prenom": "Yassine", "specialite": "Guitare électrique" }
+      ]
+    },
+    {
+      "id": "c3d8f5b6",
+      "nom": "Violon",
+      "photo": "assets/images/violon.jpg",
+      "prix": 100,
+      "dateDebut": "2026-12-10",
+      "dureeCours": 60,
+      "solfegeInclus": true,
+      "niveaux": [
+        { "id": "n1", "nom": "Débutant" },
+        { "id": "n2", "nom": "Intermédiaire" },
+        { "id": "n3", "nom": "Avancé" }
+      ],
+      "enseignant": [
+        { "nom": "Mansouri", "prenom": "Sarra", "specialite": "Violon classique" }
+      ]
+    },
+    {
+      "id": "d9a1e7c8",
+      "nom": "Oud",
+      "photo": "assets/images/oud.jpg",
+      "prix": 80,
+      "dateDebut": "2027-01-08",
+      "dureeCours": 60,
+      "solfegeInclus": true,
+      "niveaux": [
+        { "id": "n1", "nom": "Débutant" },
+        { "id": "n3", "nom": "Avancé" }
+      ],
+      "enseignant": [
+        { "nom": "Jebali", "prenom": "Anis", "specialite": "Musique orientale" }
+      ]
+    },
+    {
+      "id": "e5b4a2f9",
+      "nom": "Batterie",
+      "photo": "assets/images/batterie.jpg",
+      "prix": 85,
+      "dateDebut": "2027-01-15",
+      "dureeCours": 45,
+      "solfegeInclus": false,
+      "niveaux": [
+        { "id": "n1", "nom": "Débutant" },
+        { "id": "n2", "nom": "Intermédiaire" }
+      ],
+      "enseignant": [
+        { "nom": "Hammami", "prenom": "Oussama", "specialite": "Batterie rock et jazz" }
+      ]
+    },
+    {
+      "id": "f2c6d1e3",
+      "nom": "Chant",
+      "photo": "assets/images/chant.jpg",
+      "prix": 75,
+      "dateDebut": "2027-02-01",
+      "dureeCours": 50,
+      "solfegeInclus": true,
+      "niveaux": [
+        { "id": "n1", "nom": "Débutant" },
+        { "id": "n2", "nom": "Intermédiaire" },
+        { "id": "n3", "nom": "Avancé" }
+      ],
+      "enseignant": [
+        { "nom": "Khelifi", "prenom": "Amira", "specialite": "Technique vocale" },
+        { "nom": "Ben Ali", "prenom": "Nour", "specialite": "Chant lyrique" }
+      ]
+    }
+  ],
+  "admins": [
+    {
+      "id": "adm001",
+      "nom": "admin",
+      "password": "admin123"
+    }
+  ]
+}

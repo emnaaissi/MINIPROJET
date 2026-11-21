@@ -1,14 +1,17 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h1 class="h3 mb-0">Gestion des cours ({{ instruments().length }})</h1>
-  <a class="btn btn-primary" routerLink="/admin/instruments/add">+ Ajouter un cours</a>
+<div class="d-flex justify-content-between align-items-end mb-3 flex-wrap gap-2">
+  <div>
+    <p class="eyebrow-dark mb-1">Back office</p>
+    <h1 class="h2 mb-0">Gestion des cours ({{ instruments().length }})</h1>
+  </div>
+  <a class="btn btn-bordeaux" routerLink="/admin/instruments/add">+ Ajouter un cours</a>
 </div>
 
 <input type="text" class="form-control mb-3" placeholder="Rechercher un cours par nom…" #rech
        (input)="recherche.set(rech.value)">
 
 <div class="table-responsive">
-  <table class="table table-hover align-middle bg-white shadow-sm">
-    <thead class="table-dark">
+  <table class="table table-elegant align-middle">
+    <thead>
       <tr>
         <th>Photo</th><th>Nom</th><th>Prix</th><th>Début</th><th>Durée</th><th>Solfège</th><th class="text-end">Actions</th>
       </tr>
@@ -23,13 +26,13 @@
           <td>{{ i.dureeCours | duree }}</td>
           <td>
             <span class="badge"
-                  [class.bg-success]="i.solfegeInclus"
-                  [class.bg-secondary]="!i.solfegeInclus">
+                  [class.badge-inclus]="i.solfegeInclus"
+                  [class.badge-neutre]="!i.solfegeInclus">
               {{ i.solfegeInclus ? 'Oui' : 'Non' }}
             </span>
           </td>
           <td class="text-end">
-            <a class="btn btn-sm btn-outline-primary me-1" [routerLink]="['/admin/instruments/edit', i.id]">Modifier</a>
+            <a class="btn btn-sm btn-outline-bordeaux me-1" [routerLink]="['/admin/instruments/edit', i.id]">Modifier</a>
             <button class="btn btn-sm btn-outline-danger" (click)="onDelete(i)">Supprimer</button>
           </td>
         </tr>

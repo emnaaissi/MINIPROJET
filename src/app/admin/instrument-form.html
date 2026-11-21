@@ -1,6 +1,6 @@
 <h1 class="h3 mb-4">{{ modeEdition() ? 'Modifier le cours' : 'Ajouter un cours' }}</h1>
 
-<form [formRoot]="instrumentForm" (submit)="onSubmit()" class="card shadow-sm">
+<form [formRoot]="instrumentForm" (submit)="onSubmit()" class="card card-elegant">
   <div class="card-body p-4">
 
     <div class="row g-3">
@@ -88,7 +88,7 @@
         }
       }
     }
-    <button type="button" class="btn btn-sm btn-secondary mt-2" (click)="onAddNiveau()">+ Ajouter un niveau</button>
+    <button type="button" class="btn btn-sm btn-outline-bordeaux mt-2" (click)="onAddNiveau()">+ Ajouter un niveau</button>
 
     <hr class="my-4">
 
@@ -132,13 +132,13 @@
         </div>
       </div>
     }
-    <button type="button" class="btn btn-sm btn-secondary mt-1" (click)="onAddEnseignant()">+ Ajouter un enseignant</button>
+    <button type="button" class="btn btn-sm btn-outline-bordeaux mt-1" (click)="onAddEnseignant()">+ Ajouter un enseignant</button>
   </div>
 
-  <div class="card-footer bg-white d-flex gap-2 p-3">
-    <button type="submit" class="btn btn-primary" [disabled]="instrumentForm().invalid() || nomExiste()">
+  <div class="card-footer d-flex gap-2 p-3">
+    <button type="submit" class="btn btn-bordeaux" [disabled]="instrumentForm().invalid() || nomExiste()">
       {{ modeEdition() ? 'Enregistrer les modifications' : 'Ajouter le cours' }}
     </button>
-    <a class="btn btn-outline-secondary" routerLink="/admin/instruments">Annuler</a>
+    <a class="btn btn-outline-bordeaux" routerLink="/admin/instruments">Annuler</a>
   </div>
 </form>

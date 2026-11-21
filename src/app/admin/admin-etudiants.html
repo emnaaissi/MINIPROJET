@@ -1,0 +1,36 @@
+<header class="page-header d-flex justify-content-between align-items-end flex-wrap gap-2">
+  <div>
+    <p class="eyebrow-dark mb-1">Back office</p>
+    <h1 class="h2 mb-0">Étudiants ({{ etudiants().length }})</h1>
+  </div>
+</header>
+
+<input type="text" class="form-control mb-3" placeholder="Rechercher par nom ou email…" #rech
+       (input)="recherche.set(rech.value)">
+
+<div class="table-responsive">
+  <table class="table table-elegant align-middle">
+    <thead>
+      <tr>
+        <th>Étudiant</th><th>Email</th><th>Téléphone</th><th>Inscrit le</th><th>Cours</th><th class="text-end">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (e of resultats(); track e.id) {
+        <tr>
+          <td class="fw-bold">{{ e.prenom }} {{ e.nom }}</td>
+          <td>{{ e.email }}</td>
+          <td>{{ e.telephone }}</td>
+          <td>{{ e.dateInscription | date:'dd/MM/yyyy' }}</td>
+          <td><span class="badge badge-or">{{ e.coursIds.length }}</span></td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-outline-bordeaux me-1" [routerLink]="['/admin/etudiants', e.id]">Gérer les cours</a>
+            <button class="btn btn-sm btn-outline-bordeaux" (click)="onDelete(e)">Supprimer</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="6" class="text-center text-muted py-4">Aucun étudiant trouvé.</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

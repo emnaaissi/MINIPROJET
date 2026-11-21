@@ -1,42 +1,50 @@
-<h1 class="h3 mb-4">Tableau de bord</h1>
+<header class="page-header">
+  <p class="eyebrow-dark mb-1">Back office</p>
+  <h1 class="h2">Tableau de bord</h1>
+</header>
 
 <div class="row g-3 mb-4">
   <div class="col-sm-6 col-lg-3">
-    <div class="card text-bg-primary shadow-sm"><div class="card-body">
-      <div class="small">Cours proposés</div><div class="display-6">{{ total() }}</div>
-    </div></div>
+    <div class="card card-elegant stat-card">
+      <div class="stat-label">Cours proposés</div>
+      <div class="stat-valeur">{{ total() }}</div>
+    </div>
   </div>
   <div class="col-sm-6 col-lg-3">
-    <div class="card text-bg-success shadow-sm"><div class="card-body">
-      <div class="small">Prix moyen</div><div class="display-6">{{ prixMoyen().toFixed(1) }} DT</div>
-    </div></div>
+    <div class="card card-elegant stat-card">
+      <div class="stat-label">Prix moyen</div>
+      <div class="stat-valeur">{{ prixMoyen().toFixed(1) }} DT</div>
+    </div>
   </div>
   <div class="col-sm-6 col-lg-3">
-    <div class="card text-bg-warning shadow-sm"><div class="card-body">
-      <div class="small">Avec solfège</div><div class="display-6">{{ avecSolfege() }} / {{ total() }}</div>
-    </div></div>
+    <div class="card card-elegant stat-card">
+      <div class="stat-label">Avec solfège</div>
+      <div class="stat-valeur">{{ avecSolfege() }} / {{ total() }}</div>
+    </div>
   </div>
   <div class="col-sm-6 col-lg-3">
-    <div class="card text-bg-dark shadow-sm"><div class="card-body">
-      <div class="small">Enseignants (affectations)</div><div class="display-6">{{ nbEnseignants() }}</div>
-    </div></div>
+    <div class="card card-elegant stat-card">
+      <div class="stat-label">Étudiants inscrits</div>
+      <div class="stat-valeur">{{ nbEtudiants() }}</div>
+    </div>
   </div>
 </div>
 
 @if (total() > 0) {
   <div class="row g-3">
-    <div class="col-md-6">
-      <div class="card shadow-sm h-100">
-        <div class="card-header fw-bold">Cours les plus / moins chers</div>
+    <div class="col-md-4">
+      <div class="card card-elegant h-100">
+        <div class="card-header">Cours les plus / moins chers</div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Plus cher : <strong>{{ plusCher().nom }}</strong> ({{ plusCher().prix }} DT)</li>
-          <li class="list-group-item">Moins cher : <strong>{{ moinsCher().nom }}</strong> ({{ moinsCher().prix }} DT)</li>
+          <li class="list-group-item bg-transparent">Plus cher : <strong>{{ plusCher().nom }}</strong> ({{ plusCher().prix }} DT)</li>
+          <li class="list-group-item bg-transparent">Moins cher : <strong>{{ moinsCher().nom }}</strong> ({{ moinsCher().prix }} DT)</li>
         </ul>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="card shadow-sm h-100">
-        <div class="card-header fw-bold">Répartition par niveau</div>
+
+    <div class="col-md-4">
+      <div class="card card-elegant h-100">
+        <div class="card-header">Répartition par niveau</div>
         <div class="card-body">
           @for (n of parNiveau(); track n.nom) {
             <div class="mb-2">
@@ -45,6 +53,24 @@
               </div>
               <div class="progress">
                 <div class="progress-bar" [style.width.%]="n.nb * 100 / total()"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card card-elegant h-100">
+        <div class="card-header">Inscriptions par cours</div>
+        <div class="card-body">
+          @for (c of inscriptionsParCours(); track c.nom) {
+            <div class="mb-2">
+              <div class="d-flex justify-content-between small">
+                <span>{{ c.nom }}</span><span>{{ c.nb }} étudiant(s)</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" [style.width.%]="nbEtudiants() > 0 ? c.nb * 100 / nbEtudiants() : 0"></div>
               </div>
             </div>
           }

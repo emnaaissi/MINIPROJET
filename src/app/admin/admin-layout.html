@@ -1,7 +1,7 @@
 @if (adminService.isLoggedIn()) {
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-elegant navbar-admin sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" routerLink="/admin">⚙️ Back office</a>
+      <a class="navbar-brand" routerLink="/admin">♪ Back office</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuAdmin">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -9,10 +9,13 @@
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <a class="nav-link" routerLink="/admin/instruments" routerLinkActive="active"
-               [routerLinkActiveOptions]="{ exact: true }">Liste des cours</a>
+               [routerLinkActiveOptions]="{ exact: true }">Cours</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/admin/instruments/add" routerLinkActive="active">Ajouter un cours</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/etudiants" routerLinkActive="active">Étudiants</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/admin/dashboard" routerLinkActive="active">Tableau de bord</a>
@@ -21,9 +24,9 @@
             <a class="nav-link" routerLink="/admin/password" routerLinkActive="active">Mot de passe</a>
           </li>
         </ul>
-        <span class="navbar-text me-3">👤 {{ adminService.admin()?.nom }}</span>
-        <a class="btn btn-outline-light btn-sm me-2" routerLink="/instruments">Voir le site</a>
-        <button class="btn btn-light btn-sm" (click)="onLogout()">Déconnexion</button>
+        <span class="navbar-text navbar-text-or me-3">👤 {{ adminService.admin()?.nom }}</span>
+        <a class="btn btn-sm btn-outline-cream me-2" routerLink="/">Voir le site</a>
+        <button class="btn btn-sm btn-gold" (click)="onLogout()">Déconnexion</button>
       </div>
     </div>
   </nav>

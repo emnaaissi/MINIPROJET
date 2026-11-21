@@ -1,0 +1,103 @@
+<header class="home-nav">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a class="brand" routerLink="/">♪ 5 SOL</a>
+    <nav class="liens d-none d-md-block">
+      <a routerLink="/instruments">Nos cours</a>
+      <a routerLink="/a-propos">À propos</a>
+      <a routerLink="/etudiant/login">Espace étudiant</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="notes">
+    @for (n of notes; track $index) {
+      <span class="note"
+            [style.left.%]="n.gauche"
+            [style.font-size.rem]="n.taille"
+            [style.animation-delay.s]="n.delai"
+            [style.animation-duration.s]="n.duree">{{ n.symbole }}</span>
+    }
+  </div>
+
+  <div class="hero-content container">
+    <p class="eyebrow">École de musique</p>
+    <h1 class="hero-titre">L'art de jouer,<br><span class="texte-or">à votre rythme</span></h1>
+    <p class="hero-texte">
+      Piano, guitare, violon, oud, batterie ou chant : des cours pour tous les niveaux,
+      avec des enseignants passionnés.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-gold btn-lg pulse" routerLink="/instruments">Découvrir nos cours</a>
+      <a class="btn btn-outline-cream btn-lg" routerLink="/inscription">Créer mon compte</a>
+    </div>
+  </div>
+
+  <span class="scroll-hint">⌄</span>
+</section>
+
+<section class="section">
+  <div class="container text-center">
+    <p class="eyebrow-dark">Nos instruments</p>
+    <h2 class="reveal">Six instruments, une même passion</h2>
+    <div class="filet"></div>
+    <div class="row g-4 mt-2 justify-content-center">
+      @for (i of instruments; track i.nom) {
+        <div class="col-6 col-md-4 col-lg-2 reveal">
+          <a class="chip" routerLink="/instruments">
+            <span class="chip-icone">{{ i.icone }}</span>
+            <span class="chip-nom">{{ i.nom }}</span>
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container text-center">
+    <p class="eyebrow-dark">Pourquoi 5 SOL</p>
+    <h2 class="reveal">Une école à votre image</h2>
+    <div class="filet"></div>
+    <div class="row g-4 mt-2">
+      @for (a of avantages; track a.titre) {
+        <div class="col-md-4 reveal">
+          <div class="card card-elegant card-hover feature">
+            <div class="feature-icone">{{ a.icone }}</div>
+            <h5>{{ a.titre }}</h5>
+            <p class="text-muted mb-0">{{ a.texte }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container text-center">
+    <p class="eyebrow-dark">Comment ça marche</p>
+    <h2 class="reveal">Trois étapes simples</h2>
+    <div class="filet"></div>
+    <div class="row g-4 mt-2">
+      @for (e of etapes; track e.numero) {
+        <div class="col-md-4 etape reveal">
+          <div class="etape-numero">{{ e.numero }}</div>
+          <h5>{{ e.titre }}</h5>
+          <p class="text-muted">{{ e.texte }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container reveal">
+    <h2>Prêt à faire votre première note ?</h2>
+    <p class="mb-4 opacity-75">Rejoignez nos étudiants et choisissez votre premier cours dès aujourd'hui.</p>
+    <a class="btn btn-gold btn-lg" routerLink="/instruments">Accéder aux cours</a>
+  </div>
+</section>
+
+<footer class="footer-elegant">
+  © 2026 5 SOL · <a routerLink="/a-propos">À propos</a> · <a routerLink="/admin/login">Espace admin</a>
+</footer>

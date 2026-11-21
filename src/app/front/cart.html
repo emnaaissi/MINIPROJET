@@ -1,39 +1,66 @@
-<h1 class="mb-4">Mon panier</h1>
+<header class="page-header text-center">
+  <p class="eyebrow-dark">Réservation</p>
+  <h1>Mon panier</h1>
+  <div class="filet"></div>
+</header>
 
-@if (commandeValidee()) {
-  <div class="alert alert-success">
-    Merci ! Votre réservation a bien été enregistrée (simulation de paiement).
-  </div>
+@if (erreur()) {
+  <div class="alert alert-danger">{{ erreur() }}</div>
 }
 
 @if (items().length > 0) {
-  <div class="table-responsive">
-    <table class="table table-hover align-middle bg-white shadow-sm">
-      <thead class="table-dark">
-        <tr><th>Cours</th><th>Nom</th><th>Prix</th><th></th></tr>
+  <div class="table-responsive mb-3">
+    <table class="table table-elegant align-middle">
+      <thead>
+        <tr><th>Cours</th><th>Nom</th><th>Solfège</th><th>Prix</th><th></th></tr>
       </thead>
       <tbody>
         @for (i of items(); track i.id) {
           <tr>
             <td><img [src]="i.photo" [alt]="i.nom" class="miniature"></td>
-            <td>{{ i.nom }}</td>
+            <td class="fw-bold">{{ i.nom }}</td>
+            <td><app-solfege-badge [possede]="i.solfegeInclus" [inclus]="solfege(i)" /></td>
             <td>{{ i.prix }} DT</td>
             <td class="text-end">
-              <button class="btn btn-sm btn-outline-danger" (click)="onRemove(i.id)">Retirer</button>
+              <button class="btn btn-sm btn-outline-bordeaux" (click)="onRemove(i.id)">Retirer</button>
             </td>
           </tr>
         }
       </tbody>
       <tfoot>
-        <tr class="table-light">
-          <th colspan="2" class="text-end">Total</th>
+        <tr>
+          <th colspan="3" class="text-end">Total</th>
           <th colspan="2">{{ total() }} DT</th>
         </tr>
       </tfoot>
     </table>
   </div>
-  <button class="btn btn-success" (click)="onValidate()">Valider la réservation</button>
-} @else if (!commandeValidee()) {
-  <div class="alert alert-info">Votre panier est vide.</div>
-  <a class="btn btn-primary" routerLink="/instruments">Découvrir nos cours</a>
+
+  @if (aSolfegeNonInclus()) {
+    <div class="alert alert-elegant">
+      🎼 Le solfège est déjà inclus avec votre premier cours : il devient « non inclus » pour les autres instruments.
+    </div>
+  }
+
+  @if (etudiantService.isLoggedIn()) {
+    <div class="card card-elegant p-4">
+      <p class="mb-3">
+        Inscription au nom de
+        <strong>{{ etudiantService.etudiant()?.prenom }} {{ etudiantService.etudiant()?.nom }}</strong>
+      </p>
+      <div>
+        <button class="btn btn-bordeaux" (click)="onConfirm()">Confirmer mon inscription</button>
+      </div>
+    </div>
+  } @else if (!formulaireVisible()) {
+    <div class="d-flex align-items-center gap-3 flex-wrap">
+      <button class="btn btn-bordeaux btn-lg" (click)="onShowForm()">Continuer vers l'inscription</button>
+      <span>Déjà inscrit ? <a routerLink="/etudiant/login">Se connecter</a></span>
+    </div>
+  } @else {
+    <app-inscription-form />
+  }
+} @else {
+  <div class="alert alert-elegant">Votre panier est vide.</div>
+  <a class="btn btn-bordeaux" routerLink="/instruments">Découvrir nos cours</a>
 }

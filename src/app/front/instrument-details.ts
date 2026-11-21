@@ -1,14 +1,16 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Instrument } from '../models/instrument';
 import { InstrumentService } from '../services/instrument-service';
 import { CartService } from '../services/cart-service';
 import { DureePipe } from '../pipes/duree-pipe';
+import { SolfegeBadge } from '../shared/solfege-badge';
+import { solfegeEffectif } from '../utils/solfege';
 
 @Component({
   selector: 'app-instrument-details',
-  imports: [DatePipe, DureePipe],
+  imports: [DatePipe, DureePipe, SolfegeBadge],
   templateUrl: './instrument-details.html'
 })
 export class InstrumentDetails implements OnInit {
@@ -19,6 +21,11 @@ export class InstrumentDetails implements OnInit {
 
   instrument = signal<Instrument | undefined>(undefined);
   introuvable = signal(false);
+
+  solfegeInclus = computed(() => {
+    const i = this.instrument();
+    return i ? solfegeEffectif(i, this.cartService.items()) : false;
+  });
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id');

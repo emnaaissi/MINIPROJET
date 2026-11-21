@@ -1,7 +1,8 @@
 <div class="container py-5" style="max-width: 440px">
-  <div class="card shadow-sm">
+  <div class="card card-elegant">
     <div class="card-body p-4">
-      <h3 class="mb-3">Espace administrateur</h3>
+      <p class="eyebrow-dark mb-1 text-center">Back office</p>
+      <h3 class="text-center mb-4">Espace administrateur</h3>
 
       @if (erreur()) {
         <div class="alert alert-danger">{{ erreur() }}</div>
@@ -30,7 +31,7 @@
           }
         </div>
 
-        <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm().invalid()">
+        <button type="submit" class="btn btn-bordeaux w-100" [disabled]="loginForm().invalid()">
           Se connecter
         </button>
       </form>

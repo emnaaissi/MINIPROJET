@@ -1,0 +1,44 @@
+<div class="mx-auto py-4" style="max-width: 460px">
+  <div class="card card-elegant">
+    <div class="card-body p-4">
+      <p class="eyebrow-dark mb-1 text-center">Espace étudiant</p>
+      <h3 class="text-center mb-4">Connexion</h3>
+
+      @if (erreur()) {
+        <div class="alert alert-danger">{{ erreur() }}</div>
+      }
+
+      <form [formRoot]="loginForm" (submit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" [formField]="loginForm.email"
+                 [class.is-invalid]="loginForm.email().invalid() && loginForm.email().touched()">
+          @if (loginForm.email().invalid() && loginForm.email().touched()) {
+            @for (err of loginForm.email().errors(); track $index) {
+              <div class="text-danger small">{{ err.message }}</div>
+            }
+          }
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">Mot de passe</label>
+          <input type="password" class="form-control" [formField]="loginForm.password"
+                 [class.is-invalid]="loginForm.password().invalid() && loginForm.password().touched()">
+          @if (loginForm.password().invalid() && loginForm.password().touched()) {
+            @for (err of loginForm.password().errors(); track $index) {
+              <div class="text-danger small">{{ err.message }}</div>
+            }
+          }
+        </div>
+
+        <button type="submit" class="btn btn-bordeaux w-100" [disabled]="loginForm().invalid()">
+          Se connecter
+        </button>
+      </form>
+
+      <p class="text-center mt-3 mb-0">
+        Pas encore de compte ? <a routerLink="/inscription">S'inscrire</a>
+      </p>
+    </div>
+  </div>
+</div>

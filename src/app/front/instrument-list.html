@@ -1,9 +1,10 @@
-<div class="hero rounded-3 p-5 mb-4 text-center">
-  <h1 class="display-5 fw-bold">Apprenez la musique avec 5 SOL</h1>
-  <p class="lead mb-0">Piano, guitare, violon, oud, batterie, chant… trouvez le cours qui vous ressemble.</p>
-</div>
+<header class="page-header text-center">
+  <p class="eyebrow-dark">Nos cours</p>
+  <h1>Choisissez votre instrument</h1>
+  <div class="filet"></div>
+</header>
 
-<div class="card shadow-sm mb-4">
+<div class="card card-elegant mb-4">
   <div class="card-body">
     <div class="row g-3 align-items-end">
       <div class="col-md-5">
@@ -17,7 +18,7 @@
                (input)="prixMax.set(prixInput.value)">
       </div>
       <div class="col-md-3">
-        <button type="button" class="btn btn-secondary w-100" (click)="onReset(nomInput, prixInput)">
+        <button type="button" class="btn btn-outline-bordeaux w-100" (click)="onReset(nomInput, prixInput)">
           Réinitialiser
         </button>
       </div>
@@ -32,7 +33,7 @@
     </div>
   } @empty {
     <div class="col-12">
-      <div class="alert alert-info">Aucun cours ne correspond à votre recherche.</div>
+      <div class="alert alert-elegant">Aucun cours ne correspond à votre recherche.</div>
     </div>
   }
 </div>

@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
+import { EtudiantService } from '../services/etudiant-service';
 import { InstrumentService } from '../services/instrument-service';
 
 @Component({
@@ -7,9 +8,14 @@ import { InstrumentService } from '../services/instrument-service';
 })
 export class Dashboard implements OnInit {
   private readonly instrumentService = inject(InstrumentService);
+  private readonly etudiantService = inject(EtudiantService);
+
   instruments = this.instrumentService.instruments;
+  etudiants = this.etudiantService.etudiants;
 
   total = computed(() => this.instruments().length);
+
+  nbEtudiants = computed(() => this.etudiants().length);
 
   prixMoyen = computed(() => {
     const n = this.total();
@@ -18,17 +24,9 @@ export class Dashboard implements OnInit {
 
   avecSolfege = computed(() => this.instruments().filter(i => i.solfegeInclus).length);
 
-  plusCher = computed(() =>
-    [...this.instruments()].sort((a, b) => b.prix - a.prix)[0]
-  );
+  plusCher = computed(() => [...this.instruments()].sort((a, b) => b.prix - a.prix)[0]);
 
-  moinsCher = computed(() =>
-    [...this.instruments()].sort((a, b) => a.prix - b.prix)[0]
-  );
-
-  nbEnseignants = computed(() =>
-    this.instruments().reduce((s, i) => s + i.enseignant.length, 0)
-  );
+  moinsCher = computed(() => [...this.instruments()].sort((a, b) => a.prix - b.prix)[0]);
 
   parNiveau = computed(() => {
     const compte: Record<string, number> = {};
@@ -40,7 +38,17 @@ export class Dashboard implements OnInit {
     return Object.entries(compte).map(([nom, nb]) => ({ nom, nb }));
   });
 
+  inscriptionsParCours = computed(() =>
+    this.instruments()
+      .map(i => ({
+        nom: i.nom,
+        nb: this.etudiants().filter(e => e.coursIds.includes(i.id)).length
+      }))
+      .sort((a, b) => b.nb - a.nb)
+  );
+
   ngOnInit(): void {
     this.instrumentService.getInstruments().subscribe();
+    this.etudiantService.getEtudiants().subscribe();
   }
 }

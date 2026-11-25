@@ -13,7 +13,7 @@
   <table class="table table-elegant align-middle">
     <thead>
       <tr>
-        <th>Photo</th><th>Nom</th><th>Prix</th><th>Début</th><th>Durée</th><th>Option solfège</th><th class="text-end">Actions</th>
+        <th>Photo</th><th>Nom</th><th>Prix / mois</th><th>Début</th><th>Durée</th><th>Option solfège</th><th class="text-end">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -21,7 +21,7 @@
         <tr>
           <td><img [src]="i.photo" [alt]="i.nom" class="miniature"></td>
           <td class="fw-bold">{{ i.nom }}</td>
-          <td>{{ i.prix }} DT</td>
+          <td>{{ i.prix }} DT / mois</td>
           <td>{{ i.dateDebut | date:'dd/MM/yyyy' }}</td>
           <td>{{ i.dureeCours | duree }}</td>
           <td>

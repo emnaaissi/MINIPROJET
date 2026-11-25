@@ -4,7 +4,7 @@
   </div>
   <div class="card-body">
     <h5 class="card-title">{{ instrument().nom }}</h5>
-    <p class="prix mb-2">{{ instrument().prix }} DT</p>
+    <p class="prix mb-2">{{ instrument().prix }} DT / mois</p>
     <span class="badge"
           [class.badge-inclus]="instrument().solfegeInclus"
           [class.badge-neutre]="!instrument().solfegeInclus">

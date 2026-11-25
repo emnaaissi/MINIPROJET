@@ -5,6 +5,7 @@ import { Instrument } from '../../models/instrument';
 import { InstrumentService } from '../../services/instrument-service';
 import { CartService } from '../../services/cart-service';
 import { DureePipe } from '../../pipes/duree-pipe';
+import { PRIX_SOLFEGE } from '../../config';
 
 @Component({
   selector: 'app-instrument-details',
@@ -19,6 +20,7 @@ export class InstrumentDetails implements OnInit {
 
   instrument = signal<Instrument | undefined>(undefined);
   introuvable = signal(false);
+  prixSolfege = PRIX_SOLFEGE;
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id');

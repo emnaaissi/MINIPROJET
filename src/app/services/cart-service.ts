@@ -1,5 +1,6 @@
 import { computed, Service, signal } from '@angular/core';
 import { Instrument } from '../models/instrument';
+import { PRIX_SOLFEGE } from '../config';
 
 @Service()
 export class CartService {
@@ -11,6 +12,7 @@ export class CartService {
 
   count = computed(() => this._items().length);
   total = computed(() => this._items().reduce((somme, i) => somme + i.prix, 0));
+  totalMensuel = computed(() => this.total() + (this._solfege() ? PRIX_SOLFEGE : 0));
   proposeSolfege = computed(() => this._items().some(i => i.solfegeInclus));
 
   contient(id: string): boolean {

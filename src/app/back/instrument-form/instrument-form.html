@@ -30,7 +30,7 @@
       </div>
 
       <div class="col-md-4">
-        <label class="form-label">Prix (DT)</label>
+        <label class="form-label">Prix mensuel (DT)</label>
         <input type="number" class="form-control" [formField]="instrumentForm.prix"
                [class.is-invalid]="instrumentForm.prix().invalid() && instrumentForm.prix().touched()">
         @if (instrumentForm.prix().invalid() && instrumentForm.prix().touched()) {

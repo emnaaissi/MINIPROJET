@@ -12,7 +12,7 @@
 
       <ul class="list-group list-group-flush card-elegant mb-4">
         <li class="list-group-item bg-transparent d-flex justify-content-between">
-          <span>Prix</span><span class="prix">{{ i.prix }} DT</span>
+          <span>Prix mensuel</span><span class="prix">{{ i.prix }} DT / mois</span>
         </li>
         <li class="list-group-item bg-transparent d-flex justify-content-between">
           <span>Date de début</span><strong>{{ i.dateDebut | date:'dd/MM/yyyy' }}</strong>
@@ -25,7 +25,7 @@
           <span class="badge"
                 [class.badge-inclus]="i.solfegeInclus"
                 [class.badge-neutre]="!i.solfegeInclus">
-            {{ i.solfegeInclus ? 'En option (cours séparé)' : 'Non proposé' }}
+            {{ i.solfegeInclus ? 'Option : + ' + prixSolfege + ' DT / mois' : 'Non proposé' }}
           </span>
         </li>
       </ul>

@@ -259,6 +259,7 @@
       "dateInscription": "2026-11-25",
       "id": "KANd7XYlS0E"
     }
+
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }

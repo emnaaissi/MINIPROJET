@@ -2,11 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart-service';
 import { EtudiantService } from '../../services/etudiant-service';
-import { InscriptionForm } from '../inscription-form/inscription-form';
+import { PRIX_SOLFEGE } from '../../config';
 
 @Component({
   selector: 'app-cart',
-  imports: [RouterLink, InscriptionForm],
+  imports: [RouterLink],
   templateUrl: './cart.html'
 })
 export class Cart {
@@ -15,9 +15,9 @@ export class Cart {
   readonly etudiantService = inject(EtudiantService);
 
   items = this.cartService.items;
-  total = this.cartService.total;
+  total = this.cartService.totalMensuel;
+  prixSolfege = PRIX_SOLFEGE;
 
-  formulaireVisible = signal(false);
   erreur = signal('');
 
   onRemove(id: string) {
@@ -28,8 +28,8 @@ export class Cart {
     this.cartService.setSolfege(choix);
   }
 
-  onShowForm() {
-    this.formulaireVisible.set(true);
+  onInscription() {
+    this.router.navigate(['/inscription']);
   }
 
   onConfirm() {

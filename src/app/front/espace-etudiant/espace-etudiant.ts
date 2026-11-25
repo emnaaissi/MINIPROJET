@@ -7,6 +7,7 @@ import { EtudiantService } from '../../services/etudiant-service';
 import { InstrumentService } from '../../services/instrument-service';
 import { DureePipe } from '../../pipes/duree-pipe';
 import { JourPipe } from '../../pipes/jour-pipe';
+import { PRIX_SOLFEGE } from '../../config';
 
 @Component({
   selector: 'app-espace-etudiant',
@@ -36,6 +37,12 @@ export class EspaceEtudiant implements OnInit {
     return [...e.seances]
       .sort((a, b) => (a.date + a.heure).localeCompare(b.date + b.heure))
       .map(s => ({ seance: s, libelle: this.libelle(s), passee: s.date < this.aujourdhui }));
+  });
+
+  mensualite = computed(() => {
+    const e = this.etudiant();
+    const instruments = this.mesInstruments().reduce((somme, i) => somme + i.prix, 0);
+    return instruments + (e?.solfege ? PRIX_SOLFEGE : 0);
   });
 
   prochaines = computed(() => this.planning().filter(p => !p.passee).length);

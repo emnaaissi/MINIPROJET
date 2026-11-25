@@ -4,7 +4,6 @@ import { FrontLayout } from './front/front-layout/front-layout';
 import { InstrumentList } from './front/instrument-list/instrument-list';
 import { InstrumentDetails } from './front/instrument-details/instrument-details';
 import { Cart } from './front/cart/cart';
-import { InscriptionForm } from './front/inscription-form/inscription-form';
 import { EtudiantLogin } from './front/etudiant-login/etudiant-login';
 import { EspaceEtudiant } from './front/espace-etudiant/espace-etudiant';
 import { About } from './front/about/about';
@@ -40,7 +39,10 @@ export const routes: Routes = [
       { path: 'instruments', title: 'Nos cours', component: InstrumentList },
       { path: 'instruments/:id', title: 'Détail du cours', component: InstrumentDetails },
       { path: 'panier', title: 'Mon panier', component: Cart },
-      { path: 'inscription', title: 'Inscription', component: InscriptionForm },
+      {
+        path: 'inscription', title: 'Inscription',
+        loadComponent: () => import('./front/inscription-form/inscription-form').then(m => m.InscriptionForm)
+      },
       { path: 'etudiant/login', title: 'Connexion étudiant', component: EtudiantLogin },
       { path: 'etudiant', title: 'Mon espace', component: EspaceEtudiant },
       { path: 'a-propos', title: 'À propos', component: About }

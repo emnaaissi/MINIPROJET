@@ -12,7 +12,7 @@
   <div class="table-responsive mb-3">
     <table class="table table-elegant align-middle">
       <thead>
-        <tr><th>Cours</th><th>Nom</th><th>Solfège</th><th>Prix</th><th></th></tr>
+        <tr><th>Cours</th><th>Nom</th><th>Solfège</th><th>Prix / mois</th><th></th></tr>
       </thead>
       <tbody>
         @for (i of items(); track i.id) {
@@ -26,17 +26,26 @@
                 {{ i.solfegeInclus ? 'En option' : 'Non proposé' }}
               </span>
             </td>
-            <td>{{ i.prix }} DT</td>
+            <td>{{ i.prix }} DT / mois</td>
             <td class="text-end">
               <button class="btn btn-sm btn-outline-bordeaux" (click)="onRemove(i.id)">Retirer</button>
             </td>
           </tr>
         }
+        @if (cartService.solfege()) {
+          <tr>
+            <td>🎼</td>
+            <td class="fw-bold">Solfège</td>
+            <td><span class="badge badge-inclus">Option choisie</span></td>
+            <td>{{ prixSolfege }} DT / mois</td>
+            <td></td>
+          </tr>
+        }
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="3" class="text-end">Total</th>
-          <th colspan="2">{{ total() }} DT</th>
+          <th colspan="3" class="text-end">Total mensuel</th>
+          <th colspan="2">{{ total() }} DT / mois</th>
         </tr>
       </tfoot>
     </table>
@@ -50,7 +59,7 @@
                  [checked]="cartService.solfege()" (change)="onSolfege(choixSolfege.checked)">
         </div>
         <div>
-          <label class="fw-bold" for="solfege">Ajouter le solfège (option)</label>
+          <label class="fw-bold" for="solfege">Ajouter le solfège (+ {{ prixSolfege }} DT / mois)</label>
           <p class="text-muted small mb-0">
             Le solfège est un cours à part, différent de vos instruments : il est planifié séparément,
             à un autre moment de la semaine.
@@ -70,13 +79,11 @@
         <button class="btn btn-bordeaux" (click)="onConfirm()">Confirmer mon inscription</button>
       </div>
     </div>
-  } @else if (!formulaireVisible()) {
+  } @else {
     <div class="d-flex align-items-center gap-3 flex-wrap">
-      <button class="btn btn-bordeaux btn-lg" (click)="onShowForm()">Continuer vers l'inscription</button>
+      <button class="btn btn-bordeaux btn-lg" (click)="onInscription()">Continuer vers l'inscription</button>
       <span>Déjà inscrit ? <a routerLink="/etudiant/login">Se connecter</a></span>
     </div>
-  } @else {
-    <app-inscription-form />
   }
 } @else {
   <div class="alert alert-elegant">Votre panier est vide.</div>

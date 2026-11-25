@@ -25,9 +25,21 @@ export class AdminEtudiants implements OnInit {
     this.etudiantService.getEtudiants().subscribe();
   }
 
+  aSupprimer = signal<Etudiant | undefined>(undefined);
+
   onDelete(e: Etudiant) {
-    if (window.confirm(`Supprimer l'étudiant « ${e.prenom} ${e.nom} » ?`)) {
+    this.aSupprimer.set(e);
+  }
+
+  onConfirmDelete() {
+    const e = this.aSupprimer();
+    if (e) {
       this.etudiantService.supprimer(e.id).subscribe();
     }
+    this.aSupprimer.set(undefined);
+  }
+
+  onCancelDelete() {
+    this.aSupprimer.set(undefined);
   }
 }

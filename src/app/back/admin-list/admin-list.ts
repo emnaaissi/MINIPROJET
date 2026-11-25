@@ -24,9 +24,21 @@ export class AdminList implements OnInit {
     this.instrumentService.getInstruments().subscribe();
   }
 
+  aSupprimer = signal<Instrument | undefined>(undefined);
+
   onDelete(i: Instrument) {
-    if (window.confirm(`Supprimer le cours « ${i.nom} » ?`)) {
+    this.aSupprimer.set(i);
+  }
+
+  onConfirmDelete() {
+    const i = this.aSupprimer();
+    if (i) {
       this.instrumentService.deleteInstrument(i.id).subscribe();
     }
+    this.aSupprimer.set(undefined);
+  }
+
+  onCancelDelete() {
+    this.aSupprimer.set(undefined);
   }
 }

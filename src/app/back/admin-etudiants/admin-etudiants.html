@@ -40,3 +40,24 @@
     </tbody>
   </table>
 </div>
+
+@if (aSupprimer(); as c) {
+  <div class="modal-backdrop show"></div>
+  <div class="modal d-block" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmer la suppression</h5>
+        </div>
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer l'étudiant <strong>« {{ c.prenom }} {{ c.nom }} »</strong> ?
+          Cette action est irréversible.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-bordeaux" (click)="onCancelDelete()">Annuler</button>
+          <button type="button" class="btn btn-danger" (click)="onConfirmDelete()">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

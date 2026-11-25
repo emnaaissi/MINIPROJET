@@ -1,22 +1,22 @@
 import { Routes } from '@angular/router';
-import { Home } from './front/home';
-import { FrontLayout } from './front/front-layout';
-import { InstrumentList } from './front/instrument-list';
-import { InstrumentDetails } from './front/instrument-details';
-import { Cart } from './front/cart';
-import { InscriptionForm } from './front/inscription-form';
-import { EtudiantLogin } from './front/etudiant-login';
-import { EspaceEtudiant } from './front/espace-etudiant';
-import { About } from './front/about';
-import { Login } from './admin/login';
-import { AdminLayout } from './admin/admin-layout';
-import { AdminList } from './admin/admin-list';
-import { InstrumentForm } from './admin/instrument-form';
-import { Dashboard } from './admin/dashboard';
-import { AdminPassword } from './admin/admin-password';
-import { AdminEtudiants } from './admin/admin-etudiants';
-import { AdminEtudiantDetail } from './admin/admin-etudiant-detail';
-import { NotFound } from './not-found';
+import { Home } from './front/home/home';
+import { FrontLayout } from './front/front-layout/front-layout';
+import { InstrumentList } from './front/instrument-list/instrument-list';
+import { InstrumentDetails } from './front/instrument-details/instrument-details';
+import { Cart } from './front/cart/cart';
+import { InscriptionForm } from './front/inscription-form/inscription-form';
+import { EtudiantLogin } from './front/etudiant-login/etudiant-login';
+import { EspaceEtudiant } from './front/espace-etudiant/espace-etudiant';
+import { About } from './front/about/about';
+import { NotFound } from './front/not-found/not-found';
+import { Login } from './back/login/login';
+import { AdminLayout } from './back/admin-layout/admin-layout';
+import { AdminList } from './back/admin-list/admin-list';
+import { InstrumentForm } from './back/instrument-form/instrument-form';
+import { Dashboard } from './back/dashboard/dashboard';
+import { AdminPassword } from './back/admin-password/admin-password';
+import { AdminEtudiants } from './back/admin-etudiants/admin-etudiants';
+import { AdminEtudiantDetail } from './back/admin-etudiant-detail/admin-etudiant-detail';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', title: '5 SOL - École de musique', component: Home },
@@ -29,7 +29,7 @@ export const routes: Routes = [
       { path: 'instruments/add', title: 'Ajouter un cours', component: InstrumentForm },
       { path: 'instruments/edit/:id', title: 'Modifier un cours', component: InstrumentForm },
       { path: 'etudiants', title: 'Étudiants', component: AdminEtudiants },
-      { path: 'etudiants/:id', title: "Cours de l'étudiant", component: AdminEtudiantDetail },
+      { path: 'etudiants/:id', title: "Planning de l'étudiant", component: AdminEtudiantDetail },
       { path: 'dashboard', title: 'Tableau de bord', component: Dashboard },
       { path: 'password', title: 'Changer le mot de passe', component: AdminPassword }
     ]

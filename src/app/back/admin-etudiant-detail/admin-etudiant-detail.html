@@ -1,0 +1,124 @@
+@if (etudiant(); as e) {
+  <a class="btn btn-sm btn-outline-bordeaux mb-3" routerLink="/admin/etudiants">← Retour aux étudiants</a>
+
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <div class="card card-elegant text-center p-4 mb-3">
+        <div class="avatar">{{ e.prenom.charAt(0) }}{{ e.nom.charAt(0) }}</div>
+        <h3 class="mt-3 mb-1">{{ e.prenom }} {{ e.nom }}</h3>
+        <p class="text-muted mb-1">{{ e.email }}</p>
+        <p class="text-muted mb-1">📞 {{ e.telephone }}</p>
+        <p class="small text-muted mb-2">Inscrit(e) le {{ e.dateInscription | date:'dd/MM/yyyy' }}</p>
+        <div>
+          <span class="badge" [class.badge-inclus]="e.solfege" [class.badge-neutre]="!e.solfege">
+            {{ e.solfege ? 'Solfège choisi' : 'Solfège non choisi' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="card card-elegant">
+        <div class="card-header">Instruments choisis</div>
+        <ul class="list-group list-group-flush">
+          @for (c of instrumentsEtudiant(); track c.id) {
+            <li class="list-group-item bg-transparent d-flex align-items-center gap-3">
+              <img [src]="c.photo" [alt]="c.nom" class="miniature">
+              <strong>{{ c.nom }}</strong>
+            </li>
+          } @empty {
+            <li class="list-group-item bg-transparent text-muted">Aucun instrument.</li>
+          }
+        </ul>
+        <div class="card-footer small text-muted">
+          Les instruments sont choisis par l'étudiant. Ici, vous planifiez uniquement ses séances.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <div class="card card-elegant mb-4">
+        <div class="card-header">Planifier une séance</div>
+        <div class="card-body">
+          <form [formRoot]="seanceForm" (submit)="onAdd()">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Type de cours</label>
+                <select class="form-select" [formField]="seanceForm.type">
+                  <option value="instrument">Cours d'instrument</option>
+                  <option value="solfege" [disabled]="!e.solfege">
+                    Solfège {{ e.solfege ? '' : '(non choisi)' }}
+                  </option>
+                </select>
+              </div>
+
+              @if (seanceModel().type == 'instrument') {
+                <div class="col-md-6">
+                  <label class="form-label">Instrument</label>
+                  <select class="form-select" [formField]="seanceForm.instrumentId">
+                    <option value="">Choisir…</option>
+                    @for (c of instrumentsEtudiant(); track c.id) {
+                      <option [value]="c.id">{{ c.nom }}</option>
+                    }
+                  </select>
+                </div>
+              }
+
+              <div class="col-md-6">
+                <label class="form-label">Date</label>
+                <input type="date" class="form-control" [formField]="seanceForm.date"
+                       [class.is-invalid]="datePassee() || conflit()">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Heure</label>
+                <input type="time" class="form-control" [formField]="seanceForm.heure"
+                       [class.is-invalid]="conflit()">
+              </div>
+            </div>
+
+            @if (datePassee()) {
+              <div class="text-danger small mt-2">La date doit être aujourd'hui ou plus tard.</div>
+            }
+            @if (conflit()) {
+              <div class="text-danger small mt-2">Cet étudiant a déjà une séance à cette date et à cette heure.</div>
+            }
+
+            <button type="submit" class="btn btn-bordeaux mt-3" [disabled]="!peutAjouter()">
+              Ajouter au planning
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card card-elegant">
+        <div class="card-header">Planning ({{ planning().length }} séances)</div>
+        <ul class="list-group list-group-flush">
+          @for (p of planning(); track p.seance.id) {
+            <li class="list-group-item bg-transparent d-flex align-items-center gap-3">
+              <div class="seance-date">
+                <span class="jour">{{ p.seance.date | jour }}</span>
+                <span class="num">{{ p.seance.date | date:'dd/MM' }}</span>
+              </div>
+              <div class="flex-grow-1">
+                <strong>{{ p.libelle }}</strong>
+                <div class="small text-muted">à {{ p.seance.heure }}</div>
+              </div>
+              <span class="badge"
+                    [class.badge-inclus]="p.seance.type == 'solfege'"
+                    [class.badge-or]="p.seance.type != 'solfege'">
+                {{ p.seance.type == 'solfege' ? 'Solfège' : 'Instrument' }}
+              </span>
+              <button class="btn btn-sm btn-outline-bordeaux" (click)="onRemove(p.seance.id)">Retirer</button>
+            </li>
+          } @empty {
+            <li class="list-group-item bg-transparent text-muted">Aucune séance planifiée.</li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+} @else if (introuvable()) {
+  <div class="alert alert-danger">Cet étudiant n'existe pas.</div>
+  <a class="btn btn-outline-bordeaux" routerLink="/admin/etudiants">Retour</a>
+} @else {
+  <p class="text-muted">Chargement…</p>
+}

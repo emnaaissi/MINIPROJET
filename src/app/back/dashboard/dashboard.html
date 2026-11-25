@@ -1,0 +1,82 @@
+<header class="page-header">
+  <p class="eyebrow-dark mb-1">Back office</p>
+  <h1 class="h2">Tableau de bord</h1>
+</header>
+
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-lg-3">
+    <div class="card card-elegant stat-card">
+      <div class="stat-label">Cours proposés</div>
+      <div class="stat-valeur">{{ total() }}</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card card-elegant stat-card">
+      <div class="stat-label">Prix moyen</div>
+      <div class="stat-valeur">{{ prixMoyen().toFixed(1) }} DT</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card card-elegant stat-card">
+      <div class="stat-label">Étudiants inscrits</div>
+      <div class="stat-valeur">{{ nbEtudiants() }}</div>
+      <div class="small text-muted">dont {{ avecSolfege() }} avec solfège</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card card-elegant stat-card">
+      <div class="stat-label">Séances planifiées</div>
+      <div class="stat-valeur">{{ nbSeances() }}</div>
+    </div>
+  </div>
+</div>
+
+@if (total() > 0) {
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="card card-elegant h-100">
+        <div class="card-header">Cours les plus / moins chers</div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-transparent">Plus cher : <strong>{{ plusCher().nom }}</strong> ({{ plusCher().prix }} DT)</li>
+          <li class="list-group-item bg-transparent">Moins cher : <strong>{{ moinsCher().nom }}</strong> ({{ moinsCher().prix }} DT)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card card-elegant h-100">
+        <div class="card-header">Répartition par niveau</div>
+        <div class="card-body">
+          @for (n of parNiveau(); track n.nom) {
+            <div class="mb-2">
+              <div class="d-flex justify-content-between small">
+                <span>{{ n.nom }}</span><span>{{ n.nb }} cours</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" [style.width.%]="n.nb * 100 / total()"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card card-elegant h-100">
+        <div class="card-header">Inscriptions par cours</div>
+        <div class="card-body">
+          @for (c of inscriptionsParCours(); track c.nom) {
+            <div class="mb-2">
+              <div class="d-flex justify-content-between small">
+                <span>{{ c.nom }}</span><span>{{ c.nb }} étudiant(s)</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" [style.width.%]="nbEtudiants() > 0 ? c.nb * 100 / nbEtudiants() : 0"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

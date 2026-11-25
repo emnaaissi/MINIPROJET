@@ -57,8 +57,8 @@ export class EtudiantService {
     this.enregistrer(undefined);
   }
 
-  modifierCours(etudiant: Etudiant, coursIds: string[]): Observable<Etudiant> {
-    return this._http.put<Etudiant>(`${URL}/${etudiant.id}`, { ...etudiant, coursIds }).pipe(
+  modifier(etudiant: Etudiant): Observable<Etudiant> {
+    return this._http.put<Etudiant>(`${URL}/${etudiant.id}`, etudiant).pipe(
       tap(maj => {
         this._etudiants.update(all => all.map(e => (e.id == maj.id) ? maj : e));
         if (this._etudiant()?.id == maj.id) {

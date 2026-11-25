@@ -301,3 +301,30 @@ router-outlet + * {
 
 .cta-band { background: linear-gradient(135deg, var(--bordeaux-fonce), var(--bordeaux)); color: var(--creme); text-align: center; padding: 4.5rem 0; border-top: 4px solid var(--or); }
 .cta-band h2 { color: var(--creme); }
+
+.option-solfege { border-left: 4px solid var(--vert); }
+
+.seance {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .8rem 1rem;
+  margin-bottom: .6rem;
+  background: var(--papier);
+  border: 1px solid var(--bordure);
+  border-left: 4px solid var(--bordeaux);
+  border-radius: 12px;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.seance:hover { transform: translateX(4px); box-shadow: 0 6px 16px rgba(90, 26, 43, .1); }
+.seance-solfege { border-left-color: var(--vert); }
+.seance-passee { opacity: .55; }
+.seance-date {
+  min-width: 78px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.seance-date .jour { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--or); font-weight: 700; }
+.seance-date .num { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--bordeaux); }

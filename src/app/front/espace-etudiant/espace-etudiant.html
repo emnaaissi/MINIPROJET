@@ -1,0 +1,85 @@
+@if (etudiant(); as e) {
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <div class="card card-elegant text-center p-4">
+        <div class="avatar">{{ e.prenom.charAt(0) }}{{ e.nom.charAt(0) }}</div>
+        <h3 class="mt-3 mb-1">{{ e.prenom }} {{ e.nom }}</h3>
+        <p class="text-muted mb-1">{{ e.email }}</p>
+        <p class="text-muted mb-1">📞 {{ e.telephone }}</p>
+        <p class="small text-muted mb-3">Inscrit(e) depuis le {{ e.dateInscription | date:'dd/MM/yyyy' }}</p>
+        <hr>
+        <div class="row g-2">
+          <div class="col-4">
+            <div class="stat-label">Instruments</div>
+            <div class="stat-valeur">{{ mesInstruments().length }}</div>
+          </div>
+          <div class="col-4">
+            <div class="stat-label">Solfège</div>
+            <div class="stat-valeur">{{ e.solfege ? 'Oui' : 'Non' }}</div>
+          </div>
+          <div class="col-4">
+            <div class="stat-label">À venir</div>
+            <div class="stat-valeur">{{ prochaines() }}</div>
+          </div>
+        </div>
+        <a class="btn btn-outline-bordeaux mt-3" routerLink="/instruments">Découvrir d'autres cours</a>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <p class="eyebrow-dark mb-1">Espace étudiant</p>
+      <h1 class="mb-3">Mon planning</h1>
+
+      @for (p of planning(); track p.seance.id) {
+        <div class="seance"
+             [class.seance-solfege]="p.seance.type == 'solfege'"
+             [class.seance-passee]="p.passee">
+          <div class="seance-date">
+            <span class="jour">{{ p.seance.date | jour }}</span>
+            <span class="num">{{ p.seance.date | date:'dd/MM' }}</span>
+          </div>
+          <div class="flex-grow-1">
+            <strong>{{ p.libelle }}</strong>
+            <div class="small text-muted">à {{ p.seance.heure }}</div>
+          </div>
+          <span class="badge"
+                [class.badge-inclus]="p.seance.type == 'solfege'"
+                [class.badge-or]="p.seance.type != 'solfege'">
+            {{ p.seance.type == 'solfege' ? 'Solfège' : 'Instrument' }}
+          </span>
+        </div>
+      } @empty {
+        <div class="alert alert-elegant">
+          Aucune séance n'est planifiée pour le moment. L'administration ajoutera vos cours au planning.
+        </div>
+      }
+
+      <h2 class="h4 mt-5 mb-3">Mes instruments</h2>
+      <div class="row g-3">
+        @for (c of mesInstruments(); track c.id) {
+          <div class="col-md-6">
+            <div class="card card-elegant card-hover h-100">
+              <div class="img-wrap">
+                <img [src]="c.photo" [alt]="c.nom" class="card-img-top" style="height: 120px">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{ c.nom }}</h5>
+                <p class="small text-muted mb-1">Début le {{ c.dateDebut | date:'dd/MM/yyyy' }} · {{ c.dureeCours | duree }}</p>
+                @for (ens of c.enseignant; track $index) {
+                  <span class="d-block small">👤 {{ ens.prenom }} {{ ens.nom }}</span>
+                }
+              </div>
+              <div class="card-footer pb-3">
+                <a class="btn btn-sm btn-outline-bordeaux w-100" [routerLink]="['/instruments', c.id]">Voir le détail</a>
+              </div>
+            </div>
+          </div>
+        } @empty {
+          <div class="col-12">
+            <div class="alert alert-elegant">Vous n'avez pas encore choisi d'instrument.</div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}

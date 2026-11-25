@@ -1,3 +1,5 @@
+import { Seance } from './seance';
+
 export interface Etudiant {
   id: string;
   nom: string;
@@ -5,6 +7,8 @@ export interface Etudiant {
   email: string;
   telephone: string;
   password: string;
-  coursIds: string[];
+  instrumentIds: string[];
+  solfege: boolean;
+  seances: Seance[];
   dateInscription: string;
 }

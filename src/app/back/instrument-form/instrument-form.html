@@ -1,0 +1,144 @@
+<h1 class="h3 mb-4">{{ modeEdition() ? 'Modifier le cours' : 'Ajouter un cours' }}</h1>
+
+<form [formRoot]="instrumentForm" (submit)="onSubmit()" class="card card-elegant">
+  <div class="card-body p-4">
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Nom de l'instrument</label>
+        <input type="text" class="form-control" [formField]="instrumentForm.nom"
+               [class.is-invalid]="(instrumentForm.nom().invalid() && instrumentForm.nom().touched()) || nomExiste()">
+        @if (instrumentForm.nom().invalid() && instrumentForm.nom().touched()) {
+          @for (err of instrumentForm.nom().errors(); track $index) {
+            <div class="text-danger small">{{ err.message }}</div>
+          }
+        }
+        @if (nomExiste()) {
+          <div class="text-danger small">Cet instrument existe déjà : choisissez un autre nom.</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Photo (chemin dans assets/images)</label>
+        <input type="text" class="form-control" [formField]="instrumentForm.photo"
+               [class.is-invalid]="instrumentForm.photo().invalid() && instrumentForm.photo().touched()">
+        @if (instrumentForm.photo().invalid() && instrumentForm.photo().touched()) {
+          @for (err of instrumentForm.photo().errors(); track $index) {
+            <div class="text-danger small">{{ err.message }}</div>
+          }
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Prix (DT)</label>
+        <input type="number" class="form-control" [formField]="instrumentForm.prix"
+               [class.is-invalid]="instrumentForm.prix().invalid() && instrumentForm.prix().touched()">
+        @if (instrumentForm.prix().invalid() && instrumentForm.prix().touched()) {
+          @for (err of instrumentForm.prix().errors(); track $index) {
+            <div class="text-danger small">{{ err.message }}</div>
+          }
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Date de début</label>
+        <input type="date" class="form-control" [formField]="instrumentForm.dateDebut"
+               [class.is-invalid]="instrumentForm.dateDebut().invalid() && instrumentForm.dateDebut().touched()">
+        @if (instrumentForm.dateDebut().invalid() && instrumentForm.dateDebut().touched()) {
+          @for (err of instrumentForm.dateDebut().errors(); track $index) {
+            <div class="text-danger small">{{ err.message }}</div>
+          }
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Durée du cours (minutes)</label>
+        <input type="number" class="form-control" [formField]="instrumentForm.dureeCours"
+               [class.is-invalid]="instrumentForm.dureeCours().invalid() && instrumentForm.dureeCours().touched()">
+        @if (instrumentForm.dureeCours().invalid() && instrumentForm.dureeCours().touched()) {
+          @for (err of instrumentForm.dureeCours().errors(); track $index) {
+            <div class="text-danger small">{{ err.message }}</div>
+          }
+        }
+      </div>
+
+      <div class="col-12">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="solfege" [formField]="instrumentForm.solfegeInclus">
+          <label class="form-check-label" for="solfege">Option solfège proposée avec ce cours</label>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <h5>Niveaux</h5>
+    @for (n of instrumentForm.niveaux; track $index; let i = $index) {
+      <div class="input-group mb-1">
+        <span class="input-group-text">Niveau {{ i + 1 }}</span>
+        <input type="text" class="form-control" [formField]="n.nom"
+               [class.is-invalid]="n.nom().invalid() && n.nom().dirty()">
+        @if (instrumentModel().niveaux.length > 1) {
+          <button type="button" class="btn btn-outline-danger" (click)="onRemoveNiveau(i)">✕</button>
+        }
+      </div>
+      @if (n.nom().invalid() && n.nom().dirty()) {
+        @for (err of n.nom().errors(); track $index) {
+          <div class="text-danger small mb-1">{{ err.message }}</div>
+        }
+      }
+    }
+    <button type="button" class="btn btn-sm btn-outline-bordeaux mt-2" (click)="onAddNiveau()">+ Ajouter un niveau</button>
+
+    <hr class="my-4">
+
+    <h5>Enseignants</h5>
+    @for (e of instrumentForm.enseignant; track $index; let i = $index) {
+      <div class="border rounded p-3 mb-2">
+        <div class="d-flex justify-content-between mb-2">
+          <strong>Enseignant {{ i + 1 }}</strong>
+          @if (instrumentModel().enseignant.length > 1) {
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="onRemoveEnseignant(i)">✕ Retirer</button>
+          }
+        </div>
+        <div class="row g-2">
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Nom" [formField]="e.nom"
+                   [class.is-invalid]="e.nom().invalid() && e.nom().dirty()">
+            @if (e.nom().invalid() && e.nom().dirty()) {
+              @for (err of e.nom().errors(); track $index) {
+                <div class="text-danger small">{{ err.message }}</div>
+              }
+            }
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Prénom" [formField]="e.prenom"
+                   [class.is-invalid]="e.prenom().invalid() && e.prenom().dirty()">
+            @if (e.prenom().invalid() && e.prenom().dirty()) {
+              @for (err of e.prenom().errors(); track $index) {
+                <div class="text-danger small">{{ err.message }}</div>
+              }
+            }
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Spécialité" [formField]="e.specialite"
+                   [class.is-invalid]="e.specialite().invalid() && e.specialite().dirty()">
+            @if (e.specialite().invalid() && e.specialite().dirty()) {
+              @for (err of e.specialite().errors(); track $index) {
+                <div class="text-danger small">{{ err.message }}</div>
+              }
+            }
+          </div>
+        </div>
+      </div>
+    }
+    <button type="button" class="btn btn-sm btn-outline-bordeaux mt-1" (click)="onAddEnseignant()">+ Ajouter un enseignant</button>
+  </div>
+
+  <div class="card-footer d-flex gap-2 p-3">
+    <button type="submit" class="btn btn-bordeaux" [disabled]="instrumentForm().invalid() || nomExiste()">
+      {{ modeEdition() ? 'Enregistrer les modifications' : 'Ajouter le cours' }}
+    </button>
+    <a class="btn btn-outline-bordeaux" routerLink="/admin/instruments">Annuler</a>
+  </div>
+</form>
